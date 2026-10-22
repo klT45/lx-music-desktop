@@ -157,11 +157,5 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           TAG="dsh-v$(node -p "require('./package.json').version")-${GITHUB_RUN_NUMBER}"
-          gh release create "$TAG" out/* \
-            --repo "${{ github.repository }}" \
-            --title "LX Music DSH Bridge $TAG" \
-            --notes "非官方分支，仅供 DeepSeek Harness 插件 dsh-music-dj 联动使用。
-
-- 构建自提交：${{ github.sha }}
-- 安装包未签名：Windows 可能有 SmartScreen 提示，macOS 需右键「打开」。
-- 本分支不改动洛雪的音源机制，也不内置任何音源，需自行导入音源脚本。"
+          NOTES="非官方分支，仅供 DeepSeek Harness 插件 dsh-music-dj 联动使用。构建自 ${GITHUB_SHA}。安装包未签名：Windows 可能有 SmartScreen 提示，macOS 需右键「打开」。本分支不改动音源机制、不内置任何音源，需自行导入音源脚本。"
+          gh release create "$TAG" out/* --repo "${{ github.repository }}" --title "LX Music DSH Bridge $TAG" --notes "$NOTES"
