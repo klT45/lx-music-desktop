@@ -44,9 +44,11 @@ const options = {
     './licenses',
   ],
   publish: [
+    // DSH Bridge 分支：更新源指向本仓库，避免误拉官方版把魔改版覆盖掉。
+    // 本仓库的 Release 里没有 latest.yml，所以自动更新会安静失败，等于关闭。
     {
       provider: 'github',
-      owner: 'lyswhut',
+      owner: 'klT45',
       repo: 'lx-music-desktop',
     },
   ],
@@ -173,13 +175,13 @@ const createTarget = {
   win(arch, packageType) {
     switch (packageType) {
       case 'setup':
-        winOptions.artifactName = `\${productName}-v\${version}-${arch}-Setup.\${ext}`
+        winOptions.artifactName = `\${productName}-v\${version}-dsh-${arch}-Setup.\${ext}`
         return {
           buildOptions: { win: ['nsis'] },
           options: winOptions,
         }
       case 'green':
-        winOptions.artifactName = `\${productName}-v\${version}-win_${arch}-green.\${ext}`
+        winOptions.artifactName = `\${productName}-v\${version}-dsh-win_${arch}-green.\${ext}`
         return {
           buildOptions: { win: ['7z'] },
           options: winOptions,
@@ -197,7 +199,7 @@ const createTarget = {
           options: winOptions,
         }
       case 'portable':
-        winOptions.artifactName = `\${productName}-v\${version}-${arch}-portable.\${ext}`
+        winOptions.artifactName = `\${productName}-v\${version}-dsh-${arch}-portable.\${ext}`
         return {
           buildOptions: { win: ['portable'] },
           options: winOptions,
@@ -214,19 +216,19 @@ const createTarget = {
   linux(arch, packageType) {
     switch (packageType) {
       case 'deb':
-        linuxOptions.artifactName = `\${productName}_\${version}_${arch == 'x64' ? 'amd64' : arch}.\${ext}`
+        linuxOptions.artifactName = `\${productName}_\${version}_dsh_${arch == 'x64' ? 'amd64' : arch}.\${ext}`
         return {
           buildOptions: { linux: ['deb'] },
           options: linuxOptions,
         }
       case 'appImage':
-        linuxOptions.artifactName = `\${productName}_\${version}_${arch}.\${ext}`
+        linuxOptions.artifactName = `\${productName}_\${version}_dsh_${arch}.\${ext}`
         return {
           buildOptions: { linux: ['AppImage'] },
           options: linuxOptions,
         }
       case 'pacman':
-        linuxOptions.artifactName = `\${productName}_\${version}_${arch}.\${ext}`
+        linuxOptions.artifactName = `\${productName}_\${version}_dsh_${arch}.\${ext}`
         return {
           buildOptions: { linux: ['pacman'] },
           options: linuxOptions,
@@ -249,7 +251,7 @@ const createTarget = {
   mac(arch, packageType) {
     switch (packageType) {
       case 'dmg':
-        macOptions.artifactName = `\${productName}-\${version}-${arch}.\${ext}`
+        macOptions.artifactName = `\${productName}-\${version}-dsh-${arch}.\${ext}`
         return {
           buildOptions: { mac: ['dmg'] },
           options: macOptions,
