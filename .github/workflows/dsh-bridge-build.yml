@@ -136,7 +136,7 @@ jobs:
 
   release:
     name: Release
-    if: github.event_name == 'push' || inputs.release
+    if: github.event_name == 'push' || github.event.inputs.release == 'true'
     needs: [windows, macos, linux]
     runs-on: ubuntu-latest
     steps:
