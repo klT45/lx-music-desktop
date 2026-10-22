@@ -80,7 +80,9 @@ const requestRenderer = async(res: http.ServerResponse<http.IncomingMessage>, ac
     }, ACTION_TIMEOUT[action])
     pendingRequests.set(id, { res, timer })
     res.once('close', () => {
+      // 客户端提前断开：清理挂起项并结束等待
       finish()
+      resolve()
     })
     try {
       sendEvent(WIN_MAIN_RENDERER_EVENT_NAME.dsh_bridge_request, { id, action, params } satisfies LX.DshBridge.Request)
